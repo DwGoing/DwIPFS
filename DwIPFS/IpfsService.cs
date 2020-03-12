@@ -393,13 +393,62 @@ namespace DwIPFS
         }
 
         /// <summary>
-        /// 打开配置文件
+        /// 用$EDITOR打开配置文件
         /// </summary>
         /// <returns></returns>
         public Task<IpfsResult<string>> ConfigEditAsync()
         {
             RestRequest request = new RestRequest($"{IpfsMethod.ConfigEdit}", Method.GET);
             return ExcuteAsync<string>(request);
+        }
+
+        /// <summary>
+        /// 应用配置文件到配置
+        /// </summary>
+        /// <param name="profile"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<ConfigProfileApplyResult>> ConfigProfileApplyResultAsync(string profile, Dictionary<string, object> parameters = null)
+        {
+            string parameterString = BuildParameterString(parameters);
+            if (!string.IsNullOrEmpty(parameterString))
+                parameterString = "&" + parameterString;
+            RestRequest request = new RestRequest($"{IpfsMethod.ConfigProfileApply}?arg={profile}{parameterString}", Method.GET);
+            return ExcuteAsync<ConfigProfileApplyResult>(request);
+        }
+
+        /// <summary>
+        /// 替换配置
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<string>> ConfigReplaceAsync(string path)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.ConfigReplace}", Method.POST);
+            request.AddFile("arg", path);
+            return ExcuteAsync<string>(request);
+        }
+
+        /// <summary>
+        /// 替换配置
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<string>> ConfigReplaceAsync(byte[] content)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.ConfigReplace}", Method.POST);
+            request.AddFile("arg", content, StringExtension.GenerateRandomString(16));
+            return ExcuteAsync<string>(request);
+        }
+
+        /// <summary>
+        /// 显示配置
+        /// </summary>
+        /// <returns></returns>
+        public Task<IpfsResult<Dictionary<string, object>>> ConfigShowAsync()
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.ConfigShow}", Method.GET);
+            return ExcuteAsync<Dictionary<string, object>>(request);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace DwIPFS
         public const string BootstrapList = "bootstrap/list";
         public const string BootstrapRm = "bootstrap/rm";
         public const string BootstrapRmAll = "bootstrap/rm/all";
+        public const string Cat = "cat";
         public const string CidBase32 = "cid/base32";
         public const string CidBases = "cid/bases";
         public const string CidCodecs = "cid/codecs";
@@ -27,6 +28,8 @@ namespace DwIPFS
         public const string Commands = "commands";
         public const string Config = "config";
         public const string ConfigEdit = "config/edit";
-        public const string Cat = "cat";
+        public const string ConfigProfileApply = "config/profile/apply";
+        public const string ConfigReplace = "config/replace";
+        public const string ConfigShow = "config/show";
     }
 }

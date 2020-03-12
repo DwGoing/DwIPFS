@@ -135,4 +135,10 @@ namespace DwIPFS
         public string Key { get; set; }
         public object Value { get; set; }
     }
+
+    public class ConfigProfileApplyResult
+    {
+        public Dictionary<string, object> NewCfg { get; set; }
+        public Dictionary<string, object> OldCfg { get; set; }
+    }
 }
