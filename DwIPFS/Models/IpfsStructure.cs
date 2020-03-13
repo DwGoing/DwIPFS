@@ -141,4 +141,15 @@ namespace DwIPFS
         public Dictionary<string, object> NewCfg { get; set; }
         public Dictionary<string, object> OldCfg { get; set; }
     }
+
+    public class DagPutResult
+    {
+        public Dictionary<string, string> Cid { get; set; }
+    }
+
+    public class DagResolveResult
+    {
+        public Dictionary<string, string> Cid { get; set; }
+        public string RemPath { get; set; }
+    }
 }

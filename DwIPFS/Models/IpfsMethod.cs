@@ -31,5 +31,8 @@ namespace DwIPFS
         public const string ConfigProfileApply = "config/profile/apply";
         public const string ConfigReplace = "config/replace";
         public const string ConfigShow = "config/show";
+        public const string DagGet = "dag/get";
+        public const string DagPut = "dag/put";
+        public const string DagResolve = "dag/resolve";
     }
 }

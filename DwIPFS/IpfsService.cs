@@ -399,7 +399,7 @@ namespace DwIPFS
         public Task<IpfsResult<string>> ConfigEditAsync()
         {
             RestRequest request = new RestRequest($"{IpfsMethod.ConfigEdit}", Method.GET);
-            return ExcuteAsync<string>(request);
+            return ExcuteAsync(request);
         }
 
         /// <summary>
@@ -426,7 +426,7 @@ namespace DwIPFS
         {
             RestRequest request = new RestRequest($"{IpfsMethod.ConfigReplace}", Method.POST);
             request.AddFile("arg", path);
-            return ExcuteAsync<string>(request);
+            return ExcuteAsync(request);
         }
 
         /// <summary>
@@ -438,7 +438,7 @@ namespace DwIPFS
         {
             RestRequest request = new RestRequest($"{IpfsMethod.ConfigReplace}", Method.POST);
             request.AddFile("arg", content, StringExtension.GenerateRandomString(16));
-            return ExcuteAsync<string>(request);
+            return ExcuteAsync(request);
         }
 
         /// <summary>
@@ -449,6 +449,54 @@ namespace DwIPFS
         {
             RestRequest request = new RestRequest($"{IpfsMethod.ConfigShow}", Method.GET);
             return ExcuteAsync<Dictionary<string, object>>(request);
+        }
+
+        /// <summary>
+        /// 在IPFS网络中获取一个DAG节点
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<string>> DagGetAsync(string hash)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.DagGet}?arg={hash}", Method.GET);
+            return ExcuteAsync(request);
+        }
+
+        /// <summary>
+        /// 添加一个DAG节点到IPFS
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<DagPutResult>> DagPutAsync(string path, Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.DagPut}?{BuildParameterString(parameters)}", Method.POST);
+            request.AddFile("arg", path);
+            return ExcuteAsync<DagPutResult>(request);
+        }
+
+        /// <summary>
+        /// 添加一个DAG节点到IPFS
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<DagPutResult>> DagPutAsync(byte[] content, Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.DagPut}?{BuildParameterString(parameters)}", Method.POST);
+            request.AddFile("arg", content, StringExtension.GenerateRandomString(16));
+            return ExcuteAsync<DagPutResult>(request);
+        }
+
+        /// <summary>
+        /// 解析ipId块
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<DagResolveResult>> DagResolveAsync(string hash)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.DagResolve}?arg={hash}", Method.GET);
+            return ExcuteAsync<DagResolveResult>(request);
         }
     }
 }
