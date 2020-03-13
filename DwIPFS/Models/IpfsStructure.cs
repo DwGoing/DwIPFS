@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Newtonsoft.Json;
+
 namespace DwIPFS
 {
     public class AddResult
@@ -176,5 +178,18 @@ namespace DwIPFS
         public int ID { get; set; }
         public Dictionary<string, object> Options { get; set; }
         public DateTime StartTime { get; set; }
+    }
+
+    public class SysInfo
+    {
+        public Dictionary<string, object> DiskInfo { get; set; }
+        public Dictionary<string, object> Environment { get; set; }
+        [JsonProperty("ipfs_commit")]
+        public string IpfsCommit { get; set; }
+        [JsonProperty("ipfs_version")]
+        public string IpfsVersion { get; set; }
+        public Dictionary<string, object> Memory { get; set; }
+        public Dictionary<string, object> Net { get; set; }
+        public Dictionary<string, object> RunTime { get; set; }
     }
 }

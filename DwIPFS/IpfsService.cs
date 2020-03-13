@@ -28,6 +28,7 @@ namespace DwIPFS
         /// 构造参数字符串
         /// </summary>
         /// <param name="parameters"></param>
+        /// <param name="isFirst"></param>
         /// <returns></returns>
         private string BuildParameterString(Dictionary<string, object> parameters, bool isFirst = true)
         {
@@ -652,6 +653,37 @@ namespace DwIPFS
         {
             RestRequest request = new RestRequest($"{IpfsMethod.DiagCmds}?{BuildParameterString(parameters)}", Method.GET);
             return ExcuteAsync<RunningCommandInfo[]>(request);
+        }
+
+        /// <summary>
+        /// 从日志中清除失效请求
+        /// </summary>
+        /// <returns></returns>
+        public Task<IpfsResult<string>> DiagCmdsClearAsync()
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.DiagCmdsClear}", Method.GET);
+            return ExcuteAsync(request);
+        }
+
+        /// <summary>
+        /// 设置在log中的失效请求保存多久
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<string>> DiagSysAsync(string time)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.DiagCmdsSetTime}?arg={time}", Method.GET);
+            return ExcuteAsync(request);
+        }
+
+        /// <summary>
+        /// 打印系统诊断信息
+        /// </summary>
+        /// <returns></returns>
+        public Task<IpfsResult<SysInfo>> DiagSysAsync()
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.DiagSys}", Method.GET);
+            return ExcuteAsync<SysInfo>(request);
         }
     }
 }

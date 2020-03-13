@@ -41,5 +41,8 @@ namespace DwIPFS
         public const string DhtPut = "dht/put";
         public const string DhtQuery = "dht/query";
         public const string DiagCmds = "diag/cmds";
+        public const string DiagCmdsClear = "diag/cmds/clear";
+        public const string DiagCmdsSetTime = "diag/cmds/set-time";
+        public const string DiagSys = "diag/sys";
     }
 }
