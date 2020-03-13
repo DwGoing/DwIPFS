@@ -192,4 +192,9 @@ namespace DwIPFS
         public Dictionary<string, object> Net { get; set; }
         public Dictionary<string, object> RunTime { get; set; }
     }
+
+    public class DnsResult
+    {
+        public string Path { get; set; }
+    }
 }

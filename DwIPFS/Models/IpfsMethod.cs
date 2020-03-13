@@ -44,5 +44,6 @@ namespace DwIPFS
         public const string DiagCmdsClear = "diag/cmds/clear";
         public const string DiagCmdsSetTime = "diag/cmds/set-time";
         public const string DiagSys = "diag/sys";
+        public const string Dns = "dns";
     }
 }

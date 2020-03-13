@@ -685,5 +685,17 @@ namespace DwIPFS
             RestRequest request = new RestRequest($"{IpfsMethod.DiagSys}", Method.GET);
             return ExcuteAsync<SysInfo>(request);
         }
+
+        /// <summary>
+        /// 解析DNS链接
+        /// </summary>
+        /// <param name="domainName"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<DnsResult>> DnsAsync(string domainName, Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.Dns}?arg={domainName}{BuildParameterString(parameters, false)}", Method.GET);
+            return ExcuteAsync<DnsResult>(request);
+        }
     }
 }
