@@ -152,4 +152,18 @@ namespace DwIPFS
         public Dictionary<string, string> Cid { get; set; }
         public string RemPath { get; set; }
     }
+
+    public class PeerResponse
+    {
+        public string[] Addrs { get; set; }
+        public string ID { get; set; }
+    }
+
+    public class PeerInfo
+    {
+        public string Extra { get; set; }
+        public string ID { get; set; }
+        public PeerResponse[] Responses { get; set; }
+        public int Type { get; set; }
+    }
 }

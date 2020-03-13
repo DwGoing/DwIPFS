@@ -97,6 +97,36 @@ namespace DwIPFS
         }
 
         /// <summary>
+        /// 执行请求
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="request"></param>
+        /// <param name="resultHandle"></param>
+        /// <returns></returns>
+        private Task<IpfsResult<T>> ExcuteAsync<T>(RestRequest request, Func<string, T> resultHandle)
+        {
+            return Task.Run(async () =>
+            {
+                try
+                {
+                    var response = await _client.ExecuteAsync(request);
+                    if (response.IsSuccessful)
+                    {
+                        return new IpfsResult<T>(data: resultHandle(response.Content));
+                    }
+                    else
+                    {
+                        return new IpfsResult<T>((int)response.StatusCode, response.Content);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new IpfsResult<T>(ResultCode.CommonError, ex.Message);
+                }
+            });
+        }
+
+        /// <summary>
         /// 上传文件
         /// </summary>
         /// <param name="filePath"></param>
@@ -497,6 +527,151 @@ namespace DwIPFS
         {
             RestRequest request = new RestRequest($"{IpfsMethod.DagResolve}?arg={hash}", Method.GET);
             return ExcuteAsync<DagResolveResult>(request);
+        }
+
+        /// <summary>
+        /// 查询和节点ID相关联的多地址的所有DHT信息
+        /// </summary>
+        /// <param name="peerId"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<PeerInfo[]>> DhtFindpeerAsync(string peerId, Dictionary<string, object> parameters = null)
+        {
+            string parameterString = BuildParameterString(parameters);
+            if (!string.IsNullOrEmpty(parameterString))
+                parameterString = "&" + parameterString;
+            RestRequest request = new RestRequest($"{IpfsMethod.DhtFindpeer}?arg={peerId}{parameterString}", Method.GET);
+            return ExcuteAsync(request, content =>
+            {
+                string[] strs = content.Split("\n");
+                PeerInfo[] peerInfos = new PeerInfo[strs.Length];
+                for (int i = 0; i < strs.Length; i++)
+                {
+                    peerInfos[i] = strs[i].ToObject<PeerInfo>();
+                }
+                return peerInfos;
+            });
+        }
+
+        /// <summary>
+        /// 在DHT网络中找到有指定关键字的节点
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<PeerInfo[]>> DhtFindprovsAsync(string key, Dictionary<string, object> parameters = null)
+        {
+            string parameterString = BuildParameterString(parameters);
+            if (!string.IsNullOrEmpty(parameterString))
+                parameterString = "&" + parameterString;
+            RestRequest request = new RestRequest($"{IpfsMethod.DhtFindprovs}?arg={key}{parameterString}", Method.GET);
+            return ExcuteAsync(request, content =>
+            {
+                string[] strs = content.Split("\n");
+                PeerInfo[] peerInfos = new PeerInfo[strs.Length];
+                for (int i = 0; i < strs.Length; i++)
+                {
+                    peerInfos[i] = strs[i].ToObject<PeerInfo>();
+                }
+                return peerInfos;
+            });
+        }
+
+        /// <summary>
+        /// 给定一个键，在DHT表中查询最佳值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<PeerInfo[]>> DhtGetAsync(string key, Dictionary<string, object> parameters = null)
+        {
+            string parameterString = BuildParameterString(parameters);
+            if (!string.IsNullOrEmpty(parameterString))
+                parameterString = "&" + parameterString;
+            RestRequest request = new RestRequest($"{IpfsMethod.DhtGet}?arg={key}{parameterString}", Method.GET);
+            return ExcuteAsync(request, content =>
+            {
+                string[] strs = content.Split("\n");
+                PeerInfo[] peerInfos = new PeerInfo[strs.Length];
+                for (int i = 0; i < strs.Length; i++)
+                {
+                    peerInfos[i] = strs[i].ToObject<PeerInfo>();
+                }
+                return peerInfos;
+            });
+        }
+
+        /// <summary>
+        /// 向网络宣布正在提供给定的值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<PeerInfo[]>> DhtProvideAsync(string key, Dictionary<string, object> parameters = null)
+        {
+            string parameterString = BuildParameterString(parameters);
+            if (!string.IsNullOrEmpty(parameterString))
+                parameterString = "&" + parameterString;
+            RestRequest request = new RestRequest($"{IpfsMethod.DhtProvide}?arg={key}{parameterString}", Method.GET);
+            return ExcuteAsync(request, content =>
+            {
+                string[] strs = content.Split("\n");
+                PeerInfo[] peerInfos = new PeerInfo[strs.Length];
+                for (int i = 0; i < strs.Length; i++)
+                {
+                    peerInfos[i] = strs[i].ToObject<PeerInfo>();
+                }
+                return peerInfos;
+            });
+        }
+
+        /// <summary>
+        /// 往DHT中写入一个键值对
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<PeerInfo[]>> DhtPutAsync(string key, string value, Dictionary<string, object> parameters = null)
+        {
+            string parameterString = BuildParameterString(parameters);
+            if (!string.IsNullOrEmpty(parameterString))
+                parameterString = "&" + parameterString;
+            RestRequest request = new RestRequest($"{IpfsMethod.DhtPut}?arg={key}&arg={value}{parameterString}", Method.GET);
+            return ExcuteAsync(request, content =>
+            {
+                string[] strs = content.Split("\n");
+                PeerInfo[] peerInfos = new PeerInfo[strs.Length];
+                for (int i = 0; i < strs.Length; i++)
+                {
+                    peerInfos[i] = strs[i].ToObject<PeerInfo>();
+                }
+                return peerInfos;
+            });
+        }
+
+        /// <summary>
+        /// 查找指定节点的最近的节点
+        /// </summary>
+        /// <param name="peerId"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<PeerInfo[]>> DhtQueryAsync(string peerId, Dictionary<string, object> parameters = null)
+        {
+            string parameterString = BuildParameterString(parameters);
+            if (!string.IsNullOrEmpty(parameterString))
+                parameterString = "&" + parameterString;
+            RestRequest request = new RestRequest($"{IpfsMethod.DhtQuery}?arg={peerId}{parameterString}", Method.GET);
+            return ExcuteAsync(request, content =>
+            {
+                string[] strs = content.Split("\n");
+                PeerInfo[] peerInfos = new PeerInfo[strs.Length];
+                for (int i = 0; i < strs.Length; i++)
+                {
+                    peerInfos[i] = strs[i].ToObject<PeerInfo>();
+                }
+                return peerInfos;
+            });
         }
     }
 }

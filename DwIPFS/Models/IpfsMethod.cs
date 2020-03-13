@@ -34,5 +34,11 @@ namespace DwIPFS
         public const string DagGet = "dag/get";
         public const string DagPut = "dag/put";
         public const string DagResolve = "dag/resolve";
+        public const string DhtFindpeer = "dht/findpeer";
+        public const string DhtFindprovs = "dht/findprovs";
+        public const string DhtGet = "dht/get";
+        public const string DhtProvide = "dht/provide";
+        public const string DhtPut = "dht/put";
+        public const string DhtQuery = "dht/query";
     }
 }
