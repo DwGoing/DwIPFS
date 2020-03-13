@@ -166,4 +166,15 @@ namespace DwIPFS
         public PeerResponse[] Responses { get; set; }
         public int Type { get; set; }
     }
+
+    public class RunningCommandInfo
+    {
+        public bool Active { get; set; }
+        public string[] Args { get; set; }
+        public string Command { get; set; }
+        public DateTime EndTime { get; set; }
+        public int ID { get; set; }
+        public Dictionary<string, object> Options { get; set; }
+        public DateTime StartTime { get; set; }
+    }
 }

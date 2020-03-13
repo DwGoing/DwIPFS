@@ -40,5 +40,6 @@ namespace DwIPFS
         public const string DhtProvide = "dht/provide";
         public const string DhtPut = "dht/put";
         public const string DhtQuery = "dht/query";
+        public const string DiagCmds = "diag/cmds";
     }
 }

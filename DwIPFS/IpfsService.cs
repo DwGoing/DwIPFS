@@ -29,7 +29,7 @@ namespace DwIPFS
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        private string BuildParameterString(Dictionary<string, object> parameters)
+        private string BuildParameterString(Dictionary<string, object> parameters, bool isFirst = true)
         {
             string parameterString = "";
             if (parameters != null)
@@ -37,6 +37,8 @@ namespace DwIPFS
                 {
                     parameterString += $"{item.Key}={item.Value}";
                 }
+            if (!string.IsNullOrEmpty(parameterString) && !isFirst)
+                parameterString = "&" + parameterString;
             return parameterString;
         }
 
@@ -241,10 +243,7 @@ namespace DwIPFS
         /// <returns></returns>
         public Task<IpfsResult<BlockRmResult>> BlockRmAsync(string hash, Dictionary<string, object> parameters = null)
         {
-            string parameterString = BuildParameterString(parameters);
-            if (!string.IsNullOrEmpty(parameterString))
-                parameterString = "&" + parameterString;
-            RestRequest request = new RestRequest($"{IpfsMethod.BlockRm}?arg={hash}{parameterString}", Method.GET);
+            RestRequest request = new RestRequest($"{IpfsMethod.BlockRm}?arg={hash}{BuildParameterString(parameters, false)}", Method.GET);
             return ExcuteAsync<BlockRmResult>(request);
         }
 
@@ -330,10 +329,7 @@ namespace DwIPFS
         /// <returns></returns>
         public Task<IpfsResult<string>> CatAsync(string hash, Dictionary<string, object> parameters = null)
         {
-            string parameterString = BuildParameterString(parameters);
-            if (!string.IsNullOrEmpty(parameterString))
-                parameterString = "&" + parameterString;
-            RestRequest request = new RestRequest($"{IpfsMethod.Cat}?arg={hash}{parameterString}", Method.GET);
+            RestRequest request = new RestRequest($"{IpfsMethod.Cat}?arg={hash}{BuildParameterString(parameters, false)}", Method.GET);
             return ExcuteAsync(request);
         }
 
@@ -378,10 +374,7 @@ namespace DwIPFS
         /// <returns></returns>
         public Task<IpfsResult<CidFormatResult>> CidFormatAsync(string cid, Dictionary<string, object> parameters = null)
         {
-            string parameterString = BuildParameterString(parameters);
-            if (!string.IsNullOrEmpty(parameterString))
-                parameterString = "&" + parameterString;
-            RestRequest request = new RestRequest($"{IpfsMethod.CidFormat}?arg={cid}{parameterString}", Method.GET);
+            RestRequest request = new RestRequest($"{IpfsMethod.CidFormat}?arg={cid}{BuildParameterString(parameters, false)}", Method.GET);
             return ExcuteAsync<CidFormatResult>(request);
         }
 
@@ -415,10 +408,7 @@ namespace DwIPFS
         /// <returns></returns>
         public Task<IpfsResult<ConfigResult>> ConfigAsync(string key, Dictionary<string, object> parameters = null)
         {
-            string parameterString = BuildParameterString(parameters);
-            if (!string.IsNullOrEmpty(parameterString))
-                parameterString = "&" + parameterString;
-            RestRequest request = new RestRequest($"{IpfsMethod.Config}?arg={key}{parameterString}", Method.GET);
+            RestRequest request = new RestRequest($"{IpfsMethod.Config}?arg={key}{BuildParameterString(parameters, false)}", Method.GET);
             return ExcuteAsync<ConfigResult>(request);
         }
 
@@ -440,10 +430,7 @@ namespace DwIPFS
         /// <returns></returns>
         public Task<IpfsResult<ConfigProfileApplyResult>> ConfigProfileApplyResultAsync(string profile, Dictionary<string, object> parameters = null)
         {
-            string parameterString = BuildParameterString(parameters);
-            if (!string.IsNullOrEmpty(parameterString))
-                parameterString = "&" + parameterString;
-            RestRequest request = new RestRequest($"{IpfsMethod.ConfigProfileApply}?arg={profile}{parameterString}", Method.GET);
+            RestRequest request = new RestRequest($"{IpfsMethod.ConfigProfileApply}?arg={profile}{BuildParameterString(parameters, false)}", Method.GET);
             return ExcuteAsync<ConfigProfileApplyResult>(request);
         }
 
@@ -537,10 +524,7 @@ namespace DwIPFS
         /// <returns></returns>
         public Task<IpfsResult<PeerInfo[]>> DhtFindpeerAsync(string peerId, Dictionary<string, object> parameters = null)
         {
-            string parameterString = BuildParameterString(parameters);
-            if (!string.IsNullOrEmpty(parameterString))
-                parameterString = "&" + parameterString;
-            RestRequest request = new RestRequest($"{IpfsMethod.DhtFindpeer}?arg={peerId}{parameterString}", Method.GET);
+            RestRequest request = new RestRequest($"{IpfsMethod.DhtFindpeer}?arg={peerId}{BuildParameterString(parameters, false)}", Method.GET);
             return ExcuteAsync(request, content =>
             {
                 string[] strs = content.Split("\n");
@@ -561,10 +545,7 @@ namespace DwIPFS
         /// <returns></returns>
         public Task<IpfsResult<PeerInfo[]>> DhtFindprovsAsync(string key, Dictionary<string, object> parameters = null)
         {
-            string parameterString = BuildParameterString(parameters);
-            if (!string.IsNullOrEmpty(parameterString))
-                parameterString = "&" + parameterString;
-            RestRequest request = new RestRequest($"{IpfsMethod.DhtFindprovs}?arg={key}{parameterString}", Method.GET);
+            RestRequest request = new RestRequest($"{IpfsMethod.DhtFindprovs}?arg={key}{BuildParameterString(parameters, false)}", Method.GET);
             return ExcuteAsync(request, content =>
             {
                 string[] strs = content.Split("\n");
@@ -585,10 +566,7 @@ namespace DwIPFS
         /// <returns></returns>
         public Task<IpfsResult<PeerInfo[]>> DhtGetAsync(string key, Dictionary<string, object> parameters = null)
         {
-            string parameterString = BuildParameterString(parameters);
-            if (!string.IsNullOrEmpty(parameterString))
-                parameterString = "&" + parameterString;
-            RestRequest request = new RestRequest($"{IpfsMethod.DhtGet}?arg={key}{parameterString}", Method.GET);
+            RestRequest request = new RestRequest($"{IpfsMethod.DhtGet}?arg={key}{BuildParameterString(parameters, false)}", Method.GET);
             return ExcuteAsync(request, content =>
             {
                 string[] strs = content.Split("\n");
@@ -609,10 +587,7 @@ namespace DwIPFS
         /// <returns></returns>
         public Task<IpfsResult<PeerInfo[]>> DhtProvideAsync(string key, Dictionary<string, object> parameters = null)
         {
-            string parameterString = BuildParameterString(parameters);
-            if (!string.IsNullOrEmpty(parameterString))
-                parameterString = "&" + parameterString;
-            RestRequest request = new RestRequest($"{IpfsMethod.DhtProvide}?arg={key}{parameterString}", Method.GET);
+            RestRequest request = new RestRequest($"{IpfsMethod.DhtProvide}?arg={key}{BuildParameterString(parameters, false)}", Method.GET);
             return ExcuteAsync(request, content =>
             {
                 string[] strs = content.Split("\n");
@@ -634,10 +609,7 @@ namespace DwIPFS
         /// <returns></returns>
         public Task<IpfsResult<PeerInfo[]>> DhtPutAsync(string key, string value, Dictionary<string, object> parameters = null)
         {
-            string parameterString = BuildParameterString(parameters);
-            if (!string.IsNullOrEmpty(parameterString))
-                parameterString = "&" + parameterString;
-            RestRequest request = new RestRequest($"{IpfsMethod.DhtPut}?arg={key}&arg={value}{parameterString}", Method.GET);
+            RestRequest request = new RestRequest($"{IpfsMethod.DhtPut}?arg={key}&arg={value}{BuildParameterString(parameters, false)}", Method.GET);
             return ExcuteAsync(request, content =>
             {
                 string[] strs = content.Split("\n");
@@ -658,10 +630,7 @@ namespace DwIPFS
         /// <returns></returns>
         public Task<IpfsResult<PeerInfo[]>> DhtQueryAsync(string peerId, Dictionary<string, object> parameters = null)
         {
-            string parameterString = BuildParameterString(parameters);
-            if (!string.IsNullOrEmpty(parameterString))
-                parameterString = "&" + parameterString;
-            RestRequest request = new RestRequest($"{IpfsMethod.DhtQuery}?arg={peerId}{parameterString}", Method.GET);
+            RestRequest request = new RestRequest($"{IpfsMethod.DhtQuery}?arg={peerId}{BuildParameterString(parameters, false)}", Method.GET);
             return ExcuteAsync(request, content =>
             {
                 string[] strs = content.Split("\n");
@@ -672,6 +641,17 @@ namespace DwIPFS
                 }
                 return peerInfos;
             });
+        }
+
+        /// <summary>
+        /// 列出所有在节点上运行的命令
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<RunningCommandInfo[]>> DiagCmdsAsync(Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.DiagCmds}?{BuildParameterString(parameters)}", Method.GET);
+            return ExcuteAsync<RunningCommandInfo[]>(request);
         }
     }
 }
