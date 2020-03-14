@@ -197,4 +197,66 @@ namespace DwIPFS
     {
         public string Path { get; set; }
     }
+
+    public class FileLsResult
+    {
+        public Dictionary<string, string> Arguments { get; set; }
+        public Dictionary<string, object> Objects { get; set; }
+    }
+
+    public class FilesFlushResult
+    {
+        public string Cid { get; set; }
+    }
+
+    public class Entry
+    {
+        public string Hash { get; set; }
+        public string Name { get; set; }
+        public long Size { get; set; }
+        public int Type { get; set; }
+    }
+
+    public class FilesLsResult
+    {
+        public Entry[] Entries { get; set; }
+    }
+
+    public class FilesStatResult
+    {
+        public int Blocks { get; set; }
+        public ulong CumulativeSize { get; set; }
+        public string Hash { get; set; }
+        public bool Local { get; set; }
+        public ulong Size { get; set; }
+        public ulong SizeLocal { get; set; }
+        public string Type { get; set; }
+        public bool WithLocality { get; set; }
+    }
+
+    public class FilestoreDupsResult
+    {
+        public string Err { get; set; }
+        public string Ref { get; set; }
+    }
+
+    public class FilestoreLsResult
+    {
+        public string ErrorMsg { get; set; }
+        public string FilePath { get; set; }
+        public Dictionary<string, string> Key { get; set; }
+        public ulong Offset { get; set; }
+        public ulong Size { get; set; }
+        public int Status { get; set; }
+    }
+
+    public class FilestoreVerifyResult
+    {
+        public string ErrorMsg { get; set; }
+        public string FilePath { get; set; }
+        public Dictionary<string, string> Key { get; set; }
+        public ulong Offset { get; set; }
+        public ulong Size { get; set; }
+        public int Status { get; set; }
+    }
 }

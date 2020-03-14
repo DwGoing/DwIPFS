@@ -45,5 +45,19 @@ namespace DwIPFS
         public const string DiagCmdsSetTime = "diag/cmds/set-time";
         public const string DiagSys = "diag/sys";
         public const string Dns = "dns";
+        public const string FileLs = "file/ls";
+        public const string FilesChcid = "files/chcid";
+        public const string FilesCp = "files/cp";
+        public const string FilesFlush = "files/flush";
+        public const string FilesLs = "files/ls";
+        public const string FilesMkdir = "files/mkdir";
+        public const string FilesMv = "files/mv";
+        public const string FilesRead = "files/read";
+        public const string FilesRm = "files/rm";
+        public const string FilesStat = "files/stat";
+        public const string FilesWrite = "files/write";
+        public const string FilestoreDups = "filestore/dups";
+        public const string FilestoreLs = "filestore/ls";
+        public const string FilestoreVerify = "filestore/verify";
     }
 }

@@ -689,13 +689,189 @@ namespace DwIPFS
         /// <summary>
         /// 解析DNS链接
         /// </summary>
-        /// <param name="domainName"></param>
+        /// <param name="path"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
         public Task<IpfsResult<DnsResult>> DnsAsync(string domainName, Dictionary<string, object> parameters = null)
         {
             RestRequest request = new RestRequest($"{IpfsMethod.Dns}?arg={domainName}{BuildParameterString(parameters, false)}", Method.GET);
             return ExcuteAsync<DnsResult>(request);
+        }
+
+        /// <summary>
+        /// 列出Unix文件系统对象的目录内容
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<FileLsResult>> FileLsAsync(string path)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.FileLs}?arg={path}", Method.GET);
+            return ExcuteAsync<FileLsResult>(request);
+        }
+
+        /// <summary>
+        /// 给定path改变根节点的cid版本或者hash方式
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<string>> FilesChcidAsync(Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.FilesChcid}?{BuildParameterString(parameters)}", Method.GET);
+            return ExcuteAsync(request);
+        }
+
+        /// <summary>
+        /// 复制文件到mfs
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="destination"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<string>> FileLsAsync(string source, string destination)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.FilesCp}?arg={source}&arg={destination}", Method.GET);
+            return ExcuteAsync(request);
+        }
+
+        /// <summary>
+        /// 将给定路径的数据刷新到磁盘
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<FilesFlushResult>> FilesFlushAsync(Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.FilesFlush}?{BuildParameterString(parameters)}", Method.GET);
+            return ExcuteAsync<FilesFlushResult>(request);
+        }
+
+        /// <summary>
+        /// 列出本地可变命名空间中的目录
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<FilesLsResult>> FilesLsAsync(Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.FilesLs}?{BuildParameterString(parameters)}", Method.GET);
+            return ExcuteAsync<FilesLsResult>(request);
+        }
+
+        /// <summary>
+        /// 创建目录
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<string>> FilesMkdirAsync(string path, Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.FilesMkdir}?arg={path}{BuildParameterString(parameters, false)}", Method.GET);
+            return ExcuteAsync(request);
+        }
+
+        /// <summary>
+        /// 移动文件
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="destination"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<string>> FileMvAsync(string source, string destination)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.FilesMv}?arg={source}&arg={destination}", Method.GET);
+            return ExcuteAsync(request);
+        }
+
+        /// <summary>
+        /// 读取给定mfs中的文件
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<string>> FilesReadAsync(string path, Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.FilesRead}?arg={path}{BuildParameterString(parameters, false)}", Method.GET);
+            return ExcuteAsync(request);
+        }
+
+        /// <summary>
+        /// 删除文件
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<string>> FilesRmAsync(string path, Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.FilesRm}?arg={path}{BuildParameterString(parameters, false)}", Method.GET);
+            return ExcuteAsync(request);
+        }
+
+        /// <summary>
+        /// 用于展示文件/目录的状态
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<FilesStatResult>> FilesStatAsync(string path, Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.FilesStat}?arg={path}{BuildParameterString(parameters, false)}", Method.GET);
+            return ExcuteAsync<FilesStatResult>(request);
+        }
+
+        /// <summary>
+        /// 写入给定文件系统中的可变文件
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="filePath"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<string>> FilesWriteAsync(string path, string filePath, Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.FilesWrite}?arg={path}{BuildParameterString(parameters, false)}", Method.POST);
+            request.AddFile("arg", filePath);
+            return ExcuteAsync(request);
+        }
+
+        /// <summary>
+        /// 写入给定文件系统中的可变文件
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="content"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<string>> FilesWriteAsync(string path, byte[] content, Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.FilesWrite}?arg={path}{BuildParameterString(parameters, false)}", Method.POST);
+            request.AddFile("arg", content, StringExtension.GenerateRandomString(16));
+            return ExcuteAsync(request);
+        }
+
+        /// <summary>
+        /// 列出filestore和标准块存储中的块
+        /// </summary>
+        /// <returns></returns>
+        public Task<IpfsResult<FilestoreDupsResult>> FilestoreDupsAsync()
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.FilestoreDups}", Method.GET);
+            return ExcuteAsync<FilestoreDupsResult>(request);
+        }
+
+        /// <summary>
+        /// 列出filestore中的对象列表
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<FilestoreLsResult>> FilestoreLsAsync(Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.FilestoreLs}?{BuildParameterString(parameters)}", Method.GET);
+            return ExcuteAsync<FilestoreLsResult>(request);
+        }
+
+        /// <summary>
+        /// 验证filestore中的对象
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<FilestoreVerifyResult>> FilestoreVerifyAsync(Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.FilestoreVerify}?{BuildParameterString(parameters)}", Method.GET);
+            return ExcuteAsync<FilestoreVerifyResult>(request);
         }
     }
 }
