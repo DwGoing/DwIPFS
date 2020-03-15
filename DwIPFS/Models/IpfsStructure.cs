@@ -259,4 +259,43 @@ namespace DwIPFS
         public ulong Size { get; set; }
         public int Status { get; set; }
     }
+
+    public class IdResult
+    {
+        public string[] Addresses { get; set; }
+        public string AgentVersion { get; set; }
+        public string ID { get; set; }
+        public string ProtocolVersion { get; set; }
+        public string PublicKey { get; set; }
+    }
+
+    public class KeyGenResult
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class KeyInfo
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class KeyListResult
+    {
+        public KeyInfo[] Keys { get; set; }
+    }
+
+    public class KeyRenameResult
+    {
+        public string Id { get; set; }
+        public string Now { get; set; }
+        public bool Overwrite { get; set; }
+        public string Was { get; set; }
+    }
+
+    public class KeyRmResult
+    {
+        public KeyInfo[] Keys { get; set; }
+    }
 }

@@ -59,5 +59,11 @@ namespace DwIPFS
         public const string FilestoreDups = "filestore/dups";
         public const string FilestoreLs = "filestore/ls";
         public const string FilestoreVerify = "filestore/verify";
+        public const string Get = "get";
+        public const string Id = "id";
+        public const string KeyGen = "key/gen";
+        public const string KeyList = "key/list";
+        public const string KeyRename = "key/rename";
+        public const string KeyRm = "key/rm";
     }
 }

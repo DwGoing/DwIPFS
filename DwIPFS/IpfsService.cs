@@ -873,5 +873,76 @@ namespace DwIPFS
             RestRequest request = new RestRequest($"{IpfsMethod.FilestoreVerify}?{BuildParameterString(parameters)}", Method.GET);
             return ExcuteAsync<FilestoreVerifyResult>(request);
         }
+
+        /// <summary>
+        /// 下载IPFS对象
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<string>> GetAsync(string path, Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.Get}?arg={path}{BuildParameterString(parameters, false)}", Method.GET);
+            return ExcuteAsync(request);
+        }
+
+        /// <summary>
+        /// 展示节点ID的信息
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<IdResult>> IdAsync(Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.Id}?{BuildParameterString(parameters)}", Method.GET);
+            return ExcuteAsync<IdResult>(request);
+        }
+
+        /// <summary>
+        /// 生成一对新的键值对
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<KeyGenResult>> KeyGenAsync(string key, Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.KeyGen}?arg={key}{BuildParameterString(parameters, false)}", Method.GET);
+            return ExcuteAsync<KeyGenResult>(request);
+        }
+
+        /// <summary>
+        /// 列出本地的键值对
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<KeyListResult>> KeyListAsync(Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.KeyList}?{BuildParameterString(parameters)}", Method.GET);
+            return ExcuteAsync<KeyListResult>(request);
+        }
+
+        /// <summary>
+        /// 重命名键值对
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="newKey"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<KeyRenameResult>> KeyRenameAsync(string key, string newKey, Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.KeyRename}?arg={key}&arg={newKey}{BuildParameterString(parameters, false)}", Method.GET);
+            return ExcuteAsync<KeyRenameResult>(request);
+        }
+
+        /// <summary>
+        /// 删除键值对
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<KeyRmResult>> KeyRmAsync(string key, Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.KeyRm}?arg={key}{BuildParameterString(parameters, false)}", Method.GET);
+            return ExcuteAsync<KeyRmResult>(request);
+        }
     }
 }
