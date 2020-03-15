@@ -944,5 +944,61 @@ namespace DwIPFS
             RestRequest request = new RestRequest($"{IpfsMethod.KeyRm}?arg={key}{BuildParameterString(parameters, false)}", Method.GET);
             return ExcuteAsync<KeyRmResult>(request);
         }
+
+        /// <summary>
+        /// 改变日志等级
+        /// </summary>
+        /// <param name="ipfsPath"></param>
+        /// <param name="ipnsPath"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<LogLevelResult>> LogLevelAsync(string subsystem, string level)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.LogLevel}?arg={ipfsPath}&arg={ipnsPath}", Method.GET);
+            return ExcuteAsync<LogLevelResult>(request);
+        }
+
+        /// <summary>
+        /// 列出所有日志系统标识
+        /// </summary>
+        /// <returns></returns>
+        public Task<IpfsResult<LogLsResult>> LogLsAsync()
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.LogLs}", Method.GET);
+            return ExcuteAsync<LogLsResult>(request);
+        }
+
+        /// <summary>
+        /// 读取事件日志
+        /// </summary>
+        /// <returns></returns>
+        public Task<IpfsResult<string>> LogTailAsync()
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.LogTail}", Method.GET);
+            return ExcuteAsync(request);
+        }
+
+        /// <summary>
+        /// 列出Unix系统对象下的目录内容
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<LsResult>> LsAsync(string path, Dictionary<string, object> parameters = null)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.Ls}?arg={path}{BuildParameterString(parameters, false)}", Method.GET);
+            return ExcuteAsync<LsResult>(request);
+        }
+
+        /// <summary>
+        /// 将IPFS挂载到文件系统(只读)
+        /// </summary>
+        /// <param name="ipfsPath"></param>
+        /// <param name="ipnsPath"></param>
+        /// <returns></returns>
+        public Task<IpfsResult<MountResult>> MountAsync(string ipfsPath, string ipnsPath)
+        {
+            RestRequest request = new RestRequest($"{IpfsMethod.Mount}?arg={ipfsPath}&arg={ipnsPath}", Method.GET);
+            return ExcuteAsync<MountResult>(request);
+        }
     }
 }

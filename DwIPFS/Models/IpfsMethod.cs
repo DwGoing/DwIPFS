@@ -65,5 +65,10 @@ namespace DwIPFS
         public const string KeyList = "key/list";
         public const string KeyRename = "key/rename";
         public const string KeyRm = "key/rm";
+        public const string LogLevel = "log/level";
+        public const string LogLs = "log/ls";
+        public const string LogTail = "log/tail";
+        public const string Ls = "ls";
+        public const string Mount = "mount";
     }
 }

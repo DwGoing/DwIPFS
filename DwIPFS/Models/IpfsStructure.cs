@@ -298,4 +298,41 @@ namespace DwIPFS
     {
         public KeyInfo[] Keys { get; set; }
     }
+
+    public class LogLevelResult
+    {
+        public string Message { get; set; }
+    }
+
+    public class LogLsResult
+    {
+        public string[] Strings { get; set; }
+    }
+
+    public class LinkInfo
+    {
+        public string Hash { get; set; }
+        public string Name { get; set; }
+        public ulong Size { get; set; }
+        public string Target { get; set; }
+        public int Type { get; set; }
+    }
+
+    public class FileObject
+    {
+        public string Hash { get; set; }
+        public LinkInfo[] Links { get; set; }
+    }
+
+    public class LsResult
+    {
+        public FileObject[] Objects { get; set; }
+    }
+
+    public class MountResult
+    {
+        public bool FuseAllowOther { get; set; }
+        public string IPFS { get; set; }
+        public string IPNS { get; set; }
+    }
 }
