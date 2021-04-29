@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace DwIPFS.Extensions
@@ -20,6 +21,25 @@ namespace DwIPFS.Extensions
                 builder.Append(chars[random.Next(chars.Length)]);
             }
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// 构造参数字符串
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="isFirst"></param>
+        /// <returns></returns>
+        public static string BuildParameterString(this Dictionary<string, object> parameters, bool isFirst = true)
+        {
+            string parameterString = "";
+            if (parameters != null)
+                foreach (var item in parameters)
+                {
+                    parameterString += $"{item.Key}={item.Value}";
+                }
+            if (!string.IsNullOrEmpty(parameterString) && !isFirst)
+                parameterString = "&" + parameterString;
+            return parameterString;
         }
     }
 }

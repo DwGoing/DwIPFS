@@ -1,33 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <PackageVersion>0.1.0</PackageVersion>
-    <Authors>DwGoing</Authors>
-    <Copyright>DwGoing</Copyright>
-    <DevelopmentDependency>true</DevelopmentDependency>
-    <NeutralLanguage>zh</NeutralLanguage>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Owners>DwGoing</Owners>
-    <PackageProjectUrl>https://github.com/Dwgoing/DwIPFS</PackageProjectUrl>
-    <Title>DwIPFS</Title>
-    <Description>IPFS的.Net Core封装接口</Description>
-    <PackageId>DwIPFS</PackageId>
-    <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
-    <Summary>IPFS的.Net Core封装接口</Summary>
-    <PackOnBuild>true</PackOnBuild>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="RestSharp" Version="106.10.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="NuGet.Build.Packaging" Version="0.2.2">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Extensions\" />
+    <PackageReference Include="RestSharp" Version="106.11.7" />
   </ItemGroup>
 </Project>
